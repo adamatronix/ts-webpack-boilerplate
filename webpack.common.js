@@ -1,15 +1,18 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.ts',
   output: {
-    filename: 'boilerplate.js',
-    path: path.resolve(__dirname, 'lib'),
-    libraryTarget: 'var',
-    library: 'Boilerplate'
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'lib')
   },
   module: {
-    rules: [   
+    rules: [  
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        }, 
         {
             test: /\.js$/,
             exclude: /(node_modules|bower_components)/,
@@ -40,5 +43,8 @@ module.exports = {
           loader: 'url-loader'
         }
     ]
-  }
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
 }
