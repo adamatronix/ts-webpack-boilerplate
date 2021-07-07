@@ -1,7 +1,11 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: {
+    main: './src/index.ts',
+    example: './src/Examples.ts' 
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'lib')
@@ -44,6 +48,23 @@ module.exports = {
         }
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Examples',
+      templateContent: ({htmlWebpackPlugin}) => `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <title>${htmlWebpackPlugin.options.title}</title>
+          </head>
+          <body style="margin: 0; padding: 0; width: 100%; height: 100vh;">
+          </body>
+        </html>
+      `
+    })
+  ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
